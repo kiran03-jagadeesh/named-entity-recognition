@@ -2,10 +2,7 @@
 
 ## AIM
 
-To develop an LSTM-based model for recognizing the named entities in the text.
-
-## Problem Statement and Dataset
-![op1](https://user-images.githubusercontent.com/94174536/198293429-33dc463a-6f63-4d25-8975-90c724f8ae81.png) 
+To develop an LSTM-based model for recognizing the named entities in the text. 
 
 ## DESIGN STEPS
 ### STEP 1:
