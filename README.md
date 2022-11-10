@@ -2,31 +2,40 @@
 
 ## AIM
 
-To develop an LSTM-based model for recognizing the named entities in the text. 
+To develop an LSTM-based model for recognizing the named entities in the text.
+
+## Problem Statement and Dataset
+We aim to develop an LSTM-based neural network model using Bidirectional Recurrent Neural Networks for recognizing the named entities in the text. Bidirectional Recurrent Neural Networks connect two hidden layers of opposite directions to the same output. With this form of generative deep learning, the output layer can get information from past and future states simultaneously.
+
 
 ## DESIGN STEPS
 ### STEP 1:
-Import the necessary packages and load it.
+Import the necessary packages.
 
 ### STEP 2:
-Read the dataset, and fill the null values using forward fill
+Load the dataset, and fill the null values using forward fill
 
 ### STEP 3:
-Create a list of words, and tags. Also find the number of unique words and unique tags in the dataset.
+Create a list of words, and tags. Also find the number of unique words and tags in the dataset.
 
 ### STEP 4:
-Create a dictionary for the words and their Index values. Do the same for the tags as well,Now we move to moulding the data for training and testing.
+Create a dictionary for the words and their Index values. Do the same for the tags as well.Train and test the dataset.
 
 ### STEP 5:
-We do this by padding the sequences,This is done to acheive the same length of input data.
+Perform padding the sequences to acheive the same length of input data.
 
 ### STEP 6:
-We build a build a model using Input, Embedding, Bidirectional LSTM, Spatial Dropout, Time Distributed Dense Layers.
+Build a model using Input, Embedding, Bidirectional LSTM, Spatial Dropout, Time Distributed Dense Layers.
 
 ### STEP 7:
-We compile the model and fit the train sets and validation sets,We plot the necessary graphs for analysis,A custom prediction is done to test the model manually.
+Compile the model and fit the train sets and validation sets.
 
-## PROGRAM :
+### STEP 8
+Plot the necessary graphs for analysis. A custom prediction is done to test the model manually.
+## PROGRAM
+Program developed by : Kiran J
+
+Register number : 212221240022
 ```python
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -59,7 +68,7 @@ class SentenceGetter(object):
                                                            s["Tag"].values.tolist())]
         self.grouped = self.data.groupby("Sentence #").apply(agg_func)
         self.sentences = [s for s in self.grouped]
-    
+   
     def get_next(self):
         try:
             s = self.grouped["Sentence: {}".format(self.n_sent)]
@@ -67,7 +76,7 @@ class SentenceGetter(object):
             return s
         except:
             return None
-            
+           
  
 getter = SentenceGetter(data)
 sentences = getter.sentences
@@ -91,14 +100,14 @@ sequence.pad_sequences(nums,maxlen=2)
 X = sequence.pad_sequences(maxlen=max_len,
                   sequences=X1, padding="post",
                   value=num_words-1)
-                  
+                 
 X[0]
 y1 = [[tag2idx[w[2]] for w in s] for s in sentences]
 y = sequence.pad_sequences(maxlen=max_len,
                   sequences=y1,
                   padding="post",
                   value=tag2idx["O"])
-                  
+                 
 X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                     test_size=0.2, random_state=1)
                                                    
@@ -117,12 +126,12 @@ model.summary()
 model.compile(optimizer="adam",
               loss="sparse_categorical_crossentropy",
               metrics=["accuracy"])
-              
+             
  history = model.fit(
     x=X_train,
     y=y_train,
     validation_data=(X_test,y_test),
-    batch_size=32, 
+    batch_size=32,
     epochs=3,
 )
 
@@ -143,12 +152,13 @@ for w, true, pred in zip(X_test[i], y_true, p[0]):
 
 ## OUTPUT
 
-### Training Loss, Validation Loss Vs Iteration Plot 
-![image](https://user-images.githubusercontent.com/94174536/198294294-e3015f23-2678-4c16-8aa9-c7a42084bc17.png)
- 
-![image](https://user-images.githubusercontent.com/94174536/198294454-0aa53154-c43d-4192-94db-99eeb40dc442.png)
+### Training Loss, Validation Loss Vs Iteration Plot
+![image](https://user-images.githubusercontent.com/94155183/199181123-b756a89c-a70f-4a17-ab1e-6145bd2f6e1f.png)
+
+
 ### Sample Text Prediction
-![image](https://user-images.githubusercontent.com/94174536/198294870-d8781771-e67e-4eb1-b066-c58f756b4cb5.png)
+![image](https://user-images.githubusercontent.com/94155183/199181217-cd716a6e-50e4-4290-afbb-0a9d943a5dca.png)
+
 
 ## RESULT
-Thus, an LSTM-based model for recognizing the named entities in the text is developed.
+Thus an LSTM-based model for recognizing the named entities in the text was successfully developed.
